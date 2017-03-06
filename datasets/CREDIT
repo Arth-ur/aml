@@ -1,4 +1,10 @@
 swissroll
+    swissroll.dat, swissroll_labels.dat
     author: Surendran, Dinoj
     date:   2004-5-16
     url:    http://people.cs.uchicago.edu/~dinoj/manifold/swissroll.html
+iris
+    iris.csv
+    author: Fisher, R.A.
+    date:   1936
+    url:    https://archive.ics.uci.edu/ml/datasets/Iris
