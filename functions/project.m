@@ -16,7 +16,7 @@ function [ Y ] = project( G )
     % centering matrix
     H = eye(M) - 1/M * ones(M);
     TD = -H*S*H/2;
-    [Y, ~] = eig(TD);
+    [Y, ~, ~] = eig(TD);
 
 end
 

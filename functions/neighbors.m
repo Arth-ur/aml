@@ -31,13 +31,17 @@ function [ G ] = neighbors( dx, method, parameter )
             for i=1:M
                 [x, si] = sort(dx(i, :));
                 if length(si) > parameter+sum(x==0)
-                    G(i, si(parameter+sum(x==0)+1:end)) = 0;
+                    G(i, si(parameter+2:end)) = 0;
                 end
             end
             for i=1:M
-                [x, si] = sort(dx(:, i));
-                if length(si) > parameter+sum(x==0)
-                    G(si(parameter+sum(x==0)+1:end), i) = 0;
+                for j=1:i
+                    if G(i,j) > 0
+                        G(j,i) = G(i,j);
+                    end
+                    if G(j,i) > 0
+                        G(i,j) = G(j,i);
+                    end
                 end
             end
         otherwise
