@@ -46,3 +46,32 @@ Y = project(G);
 plot(graph(G), 'NodeCData', labels, 'XData', Y(:,1), 'YData', Y(:,2));
 title('projection');
 colormap winter
+
+%% load dataset
+clear all
+
+swissroll.data=load('aml-master/datasets/swissroll.dat');           % swissroll
+[swissroll.M,swissroll.dim] =size(swissroll.data);
+swissroll.labels=load('aml-master/datasets/swissroll_labels.dat');  % swissroll_labels
+
+
+%%
+
+% method name
+
+method = 'Isomap';  % 'Laplacian'   for laplacian eigenmap
+                    % 'Isomap'      for isomap
+               
+data=swissroll.data;
+nDim=swissroll.dim;
+
+% parameters 
+% Isomap:         - <int> k -> default = 12
+% Laplacian:      - <int> k -> default = 12
+%                 - <double> sigma -> default = 1.0
+%                 - <char[]> eig_impl -> {['Matlab'], 'JDQR'}
+parameters = 5;
+
+[mapped_data, mapping] = compute_mapping(data, method, nDim, parameters);
+
+
