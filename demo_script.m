@@ -50,9 +50,9 @@ colormap winter
 %% load dataset
 clear all
 
-swissroll.data=load('aml-master/datasets/swissroll.dat');           % swissroll
+swissroll.data=load('datasets/swissroll.dat');           % swissroll
 [swissroll.M,swissroll.dim] =size(swissroll.data);
-swissroll.labels=load('aml-master/datasets/swissroll_labels.dat');  % swissroll_labels
+swissroll.labels=load('datasets/swissroll_labels.dat');  % swissroll_labels
 
 
 %%
@@ -63,15 +63,17 @@ method = 'Isomap';  % 'Laplacian'   for laplacian eigenmap
                     % 'Isomap'      for isomap
                
 data=swissroll.data;
-nDim=swissroll.dim;
+nDim=2;
 
 % parameters 
 % Isomap:         - <int> k -> default = 12
 % Laplacian:      - <int> k -> default = 12
 %                 - <double> sigma -> default = 1.0
 %                 - <char[]> eig_impl -> {['Matlab'], 'JDQR'}
-parameters = 5;
+parameters = 8;
 
 [mapped_data, mapping] = compute_mapping(data, method, nDim, parameters);
+disp('algo done')
+scatter(mapped_data(:,1),mapped_data(:,2));
 
 
