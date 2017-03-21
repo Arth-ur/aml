@@ -1,3 +1,7 @@
+clear all
+close all
+clc
+
 %% Load swissroll dataset
 load 'datasets/swissroll.dat';
 load 'datasets/swissroll_labels.dat'
@@ -20,9 +24,9 @@ subplot(2,2,1)
 scatter3(X(:,1), X(:,2), X(:,3), 36, labels, '.');
 title('swissroll')
 
-subplot(2,2,2)
-plot(graph(G), 'XData', X(:, 1), 'YData', X(:, 2), 'ZData', X(:, 3));
-title('graph')
+% subplot(2,2,2)
+% plot(graph(G), 'XData', X(:, 1), 'YData', X(:, 2), 'ZData', X(:, 3));
+% title('graph')
 
 subplot(2,2,3)
 scatter(Y(:,1), Y(:,2), 36, labels, '.');
@@ -49,31 +53,55 @@ colormap winter
 
 %% load dataset
 clear all
+close all 
+clc
 
-swissroll.data=load('datasets/swissroll.dat');           % swissroll
-[swissroll.M,swissroll.dim] =size(swissroll.data);
-swissroll.labels=load('datasets/swissroll_labels.dat');  % swissroll_labels
+% 'swissroll', 'iris', 'breast', 
+dataset_to_load = 'breast';
+switch dataset_to_load
+    case 'breast'
+        breast = load('datasets/breast-cancer-wisconsin.dat');
+        data = breast(:,2:10);
+        labels = breast(:,11);
+        [M,dim]=size(data);
+        clear breast
+    case 'iris'
+        iris = csvread('datasets/iris.csv');
+        data = iris(51:150,1:4);    
+        labels = iris(51:150,5);
+        [M,dim]=size(data);
+        clear iris
+    case 'swissroll'
+        data=load('datasets/swissroll.dat');
+        labels=load('datasets/swissroll_labels.dat');
+        [M,dim]=size(data);
+    otherwise
+        data=load('datasets/swissroll.dat');
+        labels=load('datasets/swissroll_labels.dat');
+        [M,dim]=size(data);
+end
 
-
-%%
+%% 
 
 % method name
 
-method = 'Isomap';  % 'Laplacian'   for laplacian eigenmap
-                    % 'Isomap'      for isomap
-               
+method = 'Isomap';      % for isomap
+% method = 'Laplacian';   % for laplacian eigenmap
+       
 data=swissroll.data;
-nDim=2;
+nDim=3;
 
 % parameters 
 % Isomap:         - <int> k -> default = 12
 % Laplacian:      - <int> k -> default = 12
 %                 - <double> sigma -> default = 1.0
 %                 - <char[]> eig_impl -> {['Matlab'], 'JDQR'}
-parameters = 8;
+parameters = 6;
 
 [mapped_data, mapping] = compute_mapping(data, method, nDim, parameters);
+clc;
 disp('algo done')
-scatter(mapped_data(:,1),mapped_data(:,2));
+
+scatter3(mapped_data(:,1),mapped_data(:,2),mapped_data(:,2),5,swissroll.labels);
 
 

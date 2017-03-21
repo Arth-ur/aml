@@ -11,11 +11,14 @@ function [ Y ] = project( G )
 
     % Shortest path computation between all points
     dg = distances(graph(G), 'Method', 'positive');
+    n = size(dg, 1);
+    
     % square of distances
     S = dg.^2;
     % centering matrix
     H = eye(M) - 1/M * ones(M);
     TD = -H*S*H/2;
+%     TD = -.5 .* (bsxfun(@minus, bsxfun(@minus, S, sum(S, 1)' ./ n), sum(S, 1) ./ n) + sum(S(:)) ./ (n .^ 2));
     [Y, ~, ~] = eig(TD);
 
 end

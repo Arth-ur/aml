@@ -8,3 +8,9 @@ iris
     author: Fisher, R.A.
     date:   1936
     url:    https://archive.ics.uci.edu/ml/datasets/Iris
+
+breast-cancer-wisconsin
+    breast-cancer-wisconsin.dat
+    author: Dr. WIlliam H. Wolberg (physician), University of Wisconsin Hospitals, Madison, Wisconsin, USA 
+    date:   1992
+    url:    https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/
