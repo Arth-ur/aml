@@ -51,13 +51,18 @@ plot(graph(G), 'NodeCData', labels, 'XData', Y(:,1), 'YData', Y(:,2));
 title('projection');
 colormap winter
 
+%% add path to matlab path
+path=pwd;
+addpath(genpath([path,'/..']));
+
+
 %% load dataset
 clear all
 close all 
 clc
 
-% 'swissroll', 'iris', 'breast', 
-dataset_to_load = 'breast';
+% 'swissroll', 'iris', 'breast', 'madelon' 
+dataset_to_load = 'madelon';
 switch dataset_to_load
     case 'breast'
         breast = load('datasets/breast-cancer-wisconsin.dat');
@@ -75,11 +80,17 @@ switch dataset_to_load
         data=load('datasets/swissroll.dat');
         labels=load('datasets/swissroll_labels.dat');
         [M,dim]=size(data);
+    case 'madelon'
+        data=load('datasets/madelon.dat');
+        labels=load('datasets/madelon_labels.dat');
+        [M,dim]=size(data);
     otherwise
         data=load('datasets/swissroll.dat');
         labels=load('datasets/swissroll_labels.dat');
         [M,dim]=size(data);
 end
+
+disp('dataset loaded')
 
 %% 
 
