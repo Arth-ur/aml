@@ -61,8 +61,8 @@ clear all
 close all 
 clc
 
-% 'swissroll', 'iris', 'breast', 'madelon' 
-dataset_to_load = 'madelon';
+% 'swissroll', 'iris', 'breast', 'madelon', 'parkinsons'
+dataset_to_load = 'parkinsons';
 switch dataset_to_load
     case 'breast'
         breast = load('datasets/breast-cancer-wisconsin.dat');
@@ -83,6 +83,12 @@ switch dataset_to_load
     case 'madelon'
         data=load('datasets/madelon.dat');
         labels=load('datasets/madelon_labels.dat');
+        [M,dim]=size(data);
+    case 'parkinsons'
+        parkinsons=load('datasets/parkinsons.csv');
+        data=parkinsons(:,1:22);
+        labels=parkinsons(:,23);
+        clear parkinsons
         [M,dim]=size(data);
     otherwise
         data=load('datasets/swissroll.dat');
