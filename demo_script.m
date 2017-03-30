@@ -61,8 +61,8 @@ clear all
 close all 
 clc
 
-% 'swissroll', 'iris', 'breast', 'madelon', 'parkinsons'
-dataset_to_load = 'parkinsons';
+% 'swissroll', 'iris', 'breast', 'parkinsons'
+dataset_to_load = 'swissroll';
 switch dataset_to_load
     case 'breast'
         breast = load('datasets/breast-cancer-wisconsin.dat');
@@ -80,10 +80,6 @@ switch dataset_to_load
         data=load('datasets/swissroll.dat');
         labels=load('datasets/swissroll_labels.dat');
         [M,dim]=size(data);
-    case 'madelon'
-        data=load('datasets/madelon.dat');
-        labels=load('datasets/madelon_labels.dat');
-        [M,dim]=size(data);
     case 'parkinsons'
         parkinsons=load('datasets/parkinsons.csv');
         data=parkinsons(:,1:22);
@@ -100,25 +96,20 @@ disp('dataset loaded')
 
 %% 
 
-% method name
-
-method = 'Isomap';      % for isomap
-% method = 'Laplacian';   % for laplacian eigenmap
-       
-data=swissroll.data;
-nDim=3;
+% method name : 'Isomap', 'Laplacian'
+method = 'Isomap';
 
 % parameters 
 % Isomap:         - <int> k -> default = 12
 % Laplacian:      - <int> k -> default = 12
 %                 - <double> sigma -> default = 1.0
 %                 - <char[]> eig_impl -> {['Matlab'], 'JDQR'}
-parameters = 6;
+% parameters = 6;
 
-[mapped_data, mapping] = compute_mapping(data, method, nDim, parameters);
-clc;
+Isomap(data);
+
 disp('algo done')
 
-scatter3(mapped_data(:,1),mapped_data(:,2),mapped_data(:,2),5,swissroll.labels);
+
 
 
