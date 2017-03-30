@@ -1,11 +1,11 @@
-function [ output_args ] = Eigenmap( X )
+function [ output_args ] = Eigenmap( X , labels)
 %% Compute Laplacian Eigenmap with ML_toolbox
 
 options = [];
 options.method_name       = 'Laplacian';
-options.nbDimensions      = 20; % Number of Eigenvectors to compute.
-options.neighbors         = 5;  % Number of k-NN for Adjacency Graph
-options.sigma             = 1; % Sigma for Similarity Matrix
+options.nbDimensions      = 10; % Number of Eigenvectors to compute.
+options.neighbors         = 60;  % Number of k-NN for Adjacency Graph
+options.sigma             = 5; % Sigma for Similarity Matrix
 
 try
     [proj_LAP_X, mappingLAP]  = ml_projection(X',options);
@@ -24,7 +24,7 @@ plot_options.labels       = labels;
 plot_options.plot_labels  = {'$y_1$','$y_2$','$y_3$'};
 plot_options.title        = 'Projected data with Laplacian Eigenmaps';
 if exist('h4','var') && isvalid(h4), delete(h4);end
-h4 = ml_plot_data(proj_LAP_X(:,[1:10]),plot_options);
+h4 = ml_plot_data(proj_LAP_X(:,[1:3]),plot_options);
 
 end
 

@@ -77,9 +77,12 @@ switch dataset_to_load
         [M,dim]=size(data);
         clear iris
     case 'swissroll'
-        data=load('datasets/swissroll.dat');
-        labels=load('datasets/swissroll_labels.dat');
-        [M,dim]=size(data);
+        data = load('datasets/swissroll.dat');
+        data = data';
+        labels = load('datasets/swissroll_labels.dat');
+        labels = labels(data(1,:)>-10);
+        data = data(:,data(1,:)>-10);
+        [M,dim] = size(data);
     case 'parkinsons'
         parkinsons=load('datasets/parkinsons.csv');
         data=parkinsons(:,1:22);
@@ -97,7 +100,7 @@ disp('dataset loaded')
 %% 
 
 % method name : 'Isomap', 'Laplacian'
-method = 'Isomap';
+method = 'Laplacian';
 
 % parameters 
 % Isomap:         - <int> k -> default = 12
@@ -106,8 +109,20 @@ method = 'Isomap';
 %                 - <char[]> eig_impl -> {['Matlab'], 'JDQR'}
 % parameters = 6;
 
-Isomap(data);
+% Isomap(data);
+scatter3(data(1,:), data(2,:), data(3,:),36, labels);
+% Eigenmap( data , labels);
 
+options = [];
+options.method_name       = 'Laplacian';
+options.nbDimensions      = 10; % Number of Eigenvectors to compute.
+options.neighbors         = 3;  % Number of k-NN for Adjacency Graph
+options.sigma             = 0.5; % Sigma for Similarity Matrix
+[proj_LAP_X, mappingLAP]  = ml_projection(data',options);
+
+figure
+g=graph(mappingLAP.K);
+plot(g, 'XData', data(1, :), 'YData', data(2, :), 'NodeCData', labels);
 disp('algo done')
 
 
