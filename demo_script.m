@@ -51,9 +51,7 @@ plot(graph(G), 'NodeCData', labels, 'XData', Y(:,1), 'YData', Y(:,2));
 title('projection');
 colormap winter
 
-%% add path to matlab path
-path=pwd;
-addpath(genpath([path,'/..']));
+
 
 
 %% load dataset
