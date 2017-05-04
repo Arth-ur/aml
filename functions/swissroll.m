@@ -61,10 +61,16 @@ if ~exist('output', 'dir')
     mkdir('output')
 end
 % output figures
-figure(1)
-print('output/swissroll2d', '-dpdf')
-figure(2)
-print('output/swissroll3d', '-dpdf')
+h = figure(1);
+set(h,'Units','Inches');
+pos = get(h,'Position');
+set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+print('output/swissroll2d', '-dpdf','-r0')
+h = figure(2);
+set(h,'Units','Inches');
+pos = get(h,'Position');
+set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+print('output/swissroll3d', '-dpdf','-r0')
 save('output/swissroll.dat', 'data', '-ascii')
 save('output/swissroll_labels.dat', 'labels', '-ascii')
 % output parameters to .tex file to be used as variables in latex report
