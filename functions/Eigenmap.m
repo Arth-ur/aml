@@ -1,4 +1,4 @@
-function [ output_args ] = Eigenmap( X , labels)
+function Eigenmap( X , labels)
 %% Compute Laplacian Eigenmap with ML_toolbox
 
 options = [];

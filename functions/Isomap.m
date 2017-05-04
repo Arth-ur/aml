@@ -1,4 +1,4 @@
-function [ output_args ] = Isomap( X )
+function Isomap( X )
 %% 4) Compute Isomap with ML_toolbox
 options = [];
 options.method_name       = 'Isomap';
