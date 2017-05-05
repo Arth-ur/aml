@@ -3,10 +3,10 @@ function Isomap( X )
 options = [];
 options.method_name       = 'Isomap';
 options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 50;      % Number of k-NN for Adjacency Graph
+options.neighbors         = 1999;    % Number of k-NN for Adjacency Graph
 
 try
-    [proj_ISO_X, mappingISO]  = ml_projection(X',options);
+    [proj_ISO_X, mappingISO]  = ml_projection(X,options);
 catch
     error('Please enter a higher number of neighbors')
 end

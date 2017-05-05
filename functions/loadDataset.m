@@ -20,6 +20,10 @@ function loadDataset(datasetName)
             labels = labels(dataset(:,1)>-10);
             dataset = dataset(dataset(:,1)>-10,:);
             [M,dim] = size(dataset);
+        case 'FunSwissroll'
+            
+            [dataset, labels] = swissroll();
+            [M,dim] = size(dataset);
         case 'parkinsons'
             parkinsons=load('datasets/parkinsons.csv');
             dataset=parkinsons(:,1:22);
