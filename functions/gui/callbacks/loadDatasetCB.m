@@ -1,7 +1,4 @@
 function loadDatasetCB(hObject, eventdata, handles)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
-
     % get the guidata linked to the figure
     fig=gcf;
     data = guidata(fig);

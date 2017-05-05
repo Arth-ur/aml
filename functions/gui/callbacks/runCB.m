@@ -13,10 +13,9 @@ function runCB( hObject, eventdata, handles )
         disp(['Running ', data.methodName, ' with dataset "', data.datasetName, '"'])
         switch data.methodName
             case 'Eigenmap'
-                Eigenmap( data.dataset' , data.labels);
+                Eigenmap( data.dataset , data.labels);
             case 'Isomap'
                 Isomap( data.dataset');
-                
             otherwise
                 disp('wrong method name')
         end

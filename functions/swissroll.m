@@ -53,7 +53,7 @@ title('3D dataset')
 
 % prepare exported data
 data = [X3' Y3' Z3'];
-labels = reshape(ones(N,4).*(1:4),[1,N*4])';
+labels = reshape(ones(N,1)*(1:4),[1,N*4])';
 
 % export data and figure to output directory
 % check if output directory does exist
