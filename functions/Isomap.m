@@ -11,7 +11,7 @@ catch
     error('Please enter a higher number of neighbors')
 end
 
-if length(proj_ISO_X)<M
+if length(proj_ISO_X)<length(X)
     warning('Graph has disconnected components! \n Only %d points from the largest connected component were projected! \n There Ids are stored in: mappingISO.conn_comp.', length(proj_ISO_X))
 end
 
