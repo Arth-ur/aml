@@ -21,8 +21,7 @@ function loadDataset(datasetName)
             dataset = dataset(dataset(:,1)>-10,:);
             [M,dim] = size(dataset);
         case 'FunSwissroll'
-            
-            [dataset, labels] = swissroll();
+            [dataset, labels] = swissroll(100,[5,8;5,12;15,8;15,12],[2.5, 1]);
             [M,dim] = size(dataset);
         case 'parkinsons'
             parkinsons=load('datasets/parkinsons.csv');
@@ -45,6 +44,8 @@ function loadDataset(datasetName)
     
     % save dataset and labels to workspace
     assignin('base','data',data);
+    
+    data
     
     disp([datasetName, ' dataset loaded'])
 end
