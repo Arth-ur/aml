@@ -11,8 +11,8 @@ addpath(genpath([path,'/..']));
 rng(555);
 
 % choose dataset
-list={'swissroll', 'iris', 'breast', 'parkinsons', 'FunSwissroll'};
-loadDataset(list{5});
+list={'Swissroll', 'Iris', 'Breast', 'Parkinsons', 'FunSwissroll', 'FunSwissroll2'};
+loadDataset(list{1});
 
 disp('setup done')
 
@@ -29,6 +29,11 @@ options.sigma             = 0.5;   % Sigma for Similarity Matrix
 options.labels            = data.labels;
 options.title             = [data.name, ' : Original data'];
 ml_plot_data(data.dataset, options);
+legend off
+ax=gca;
+ax.Title.FontSize=20;
+ax.XLabel.FontSize=16;
+ax.YLabel.FontSize=16;
 OurEigenmap( data, options)
 
 %% Isomap
@@ -38,11 +43,11 @@ disp ('Running Isomap')
 options = [];
 options.method_name       = 'Isomap';
 options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 200;    % Number of k-NN for Adjacency Graph
+options.neighbors         = 20;    % Number of k-NN for Adjacency Graph
 options.labels            = data.labels;
+options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
 
-
-ml_plot_data(data.dataset, options);
 OurIsomap(data.dataset, options)
+
 
