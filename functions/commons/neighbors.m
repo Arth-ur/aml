@@ -45,7 +45,8 @@ function [ G ] = neighbors( dx, method, parameter )
                 end
             end
         otherwise
-            error('Unknown method.');
+            error(['Unknown method "' ...
+                method '". Should be "count" or "radius".']);
     end
 end
 
