@@ -85,7 +85,7 @@ function [data, labels] = swissroll2(varargin)
 
     % prepare exported data
     data = [X3' Y3' Z3'];
-    labels = reshape(repmat(1:4,N,1),[1,N*4])';
+    labels = (1:N)';
 
     % export data and figure to output directory
     % check if output directory does exist

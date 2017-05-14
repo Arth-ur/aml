@@ -25,7 +25,6 @@ function loadDataset(datasetName)
             [M,dim] = size(dataset);
         case 'FunSwissroll2'
             [dataset, labels] = swissroll2(1000);
-            labels=linspace(0,1,1000);
             [M,dim] = size(dataset);
         case 'Parkinsons'
             parkinsons=load('datasets/parkinsons.csv');
