@@ -38,6 +38,7 @@ OurEigenmap( data, options)
 
 %% Isomap
 clc
+close all
 disp ('Running Isomap')
 
 options = [];
@@ -50,6 +51,12 @@ options.title             = [data.name, ' : Original data'];
 
 OurIsomap(data.dataset, options)
 
+h = figure(1);
+set(h,'Units','Inches');
+pos = get(h,'Position');
+set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+print('output/isomap-swissroll', '-dpdf','-r0')
+fprintf('Figure saved to file isomap-swissroll.pdf!\n')
 
 %% Complexity analysis
 yn = 'Y';

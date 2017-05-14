@@ -18,12 +18,15 @@ end
 if exist('h3a','var') && isvalid(h3a), delete(h3a);end
 h3a = ml_plot_eigenvalues(diag(mappingISO.val));
 
-options.title = [options.name ': Projected data with Isomap'];
-ml_plot_data(proj_ISO_X(:,2:3), options);
-legend off
-ax=gca;
-ax.XLabel.FontSize=16;
-ax.YLabel.FontSize=16;
+% options.title = [options.name ': Projected data with Isomap'];
+% ml_plot_data(proj_ISO_X(:,1:2), options);
+% legend off
+% ax=gca;
+% ax.XLabel.FontSize=16;
+% ax.YLabel.FontSize=16;
+
+scatter(proj_ISO_X(:,1),proj_ISO_X(:,2),[],options.labels,'filled');
+title('Isomap projection', 'Interpreter', 'Latex')
 
 disp('end of Isomap function')
 
