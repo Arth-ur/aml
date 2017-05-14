@@ -52,22 +52,25 @@ end
 %%
 ns = 7;
 Ns = linspace(500,5000,ns);
-ntries = 7;
+ntries = 5;
 times = zeros(ns,ntries);
 for i=1:ns
     for j=1:ntries
-        tic
         [X, ~] = swissroll2(Ns(i), 'ShowFigures', false);
+        tic
         Isomap(X');
         times(i,j) = toc;
     end
 end
+save('output/timing-isomap.dat', 'times', 'Ns')
 %%
-errorbar(mean(times'),std(times'))
-xlabel('N')
-ylabel('time (s)')
+%load('output/timing-isomap.dat')
+boxplot(times', Ns)
+xlabel('N','Interpreter','latex')
+ylabel('time (s)','Interpreter','latex')
+title('Isomap timing','Interpreter','latex')
 h = figure(1);
 set(h,'Units','Inches');
 pos = get(h,'Position');
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-print([p.Results.OutputDir '/swissroll2d'], '-dpdf','-r0')
+print('output/timing-isomap', '-dpdf','-r0')
