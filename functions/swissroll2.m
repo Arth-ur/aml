@@ -1,4 +1,4 @@
-function [data, labels] = swissroll(varargin)
+function [data, labels] = swissroll2(varargin)
     % SWISSROLL Generate a swiss roll dataset
     %   [DATA, LABELS] = SWISSROLL() generates swissroll with default
     %   parameters.
@@ -74,13 +74,13 @@ function [data, labels] = swissroll(varargin)
         % plot original 2d dataset
         figure
         scatter(X(1:N),Y(1:N),[],linspace(0,1,N), 'filled');
-        title('2D base dataset')
+        title('2D base dataset','Interpreter','latex')
 
         % plot 3d dataset
         figure
         scatter3(X3(1:N), Y3(1:N), Z3(1:N), [], linspace(0,1,N), 'filled');
         view(-16,14)
-        title('3D dataset')
+        title('3D dataset','Interpreter','latex')
     end
 
     % prepare exported data
@@ -118,8 +118,6 @@ function [data, labels] = swissroll(varargin)
             disp(['seed = ' num2str(seed)]);
         end
         disp(['N = ' num2str(N)]);
-        disp(['sx = ' num2str(sx)]);
-        disp(['sy = ' num2str(sy)]);
         diary off;
         fclose('all');
         kvf2tex(kvffile, texfile, 'swissroll'); % to latex
