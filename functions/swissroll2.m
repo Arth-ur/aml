@@ -114,9 +114,6 @@ function [data, labels] = swissroll2(varargin)
         kvffile = [p.Results.OutputDir '/swissroll.kvf'];
         texfile = [p.Results.OutputDir '/swissroll.tex'];
         diary(kvffile);
-        if exist('seed', 'var')
-            disp(['seed = ' num2str(seed)]);
-        end
         disp(['N = ' num2str(N)]);
         diary off;
         fclose('all');
