@@ -49,7 +49,10 @@ options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
 
-OurIsomap(data.dataset, options)
+[proj_ISO_X, mappingISO] = OurIsomap(data.dataset, options);
+
+scatter(proj_ISO_X(:,1),proj_ISO_X(:,2),[],options.labels,'filled');
+title('Isomap projection', 'Interpreter', 'Latex')
 
 h = figure(1);
 set(h,'Units','Inches');

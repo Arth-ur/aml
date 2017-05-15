@@ -1,4 +1,4 @@
-function OurIsomap( X , options)
+function [proj_ISO_X, mappingISO] = OurIsomap( X , options)
 %% Compute Isomap with ML_toolbox
 
 if(length(X)>1000)
@@ -16,7 +16,7 @@ end
 
 % Plot EigenValues to try to find the optimal "p"
 if exist('h3a','var') && isvalid(h3a), delete(h3a);end
-h3a = ml_plot_eigenvalues(diag(mappingISO.val));
+% h3a = ml_plot_eigenvalues(diag(mappingISO.val));
 
 % options.title = [options.name ': Projected data with Isomap'];
 % ml_plot_data(proj_ISO_X(:,1:2), options);
@@ -24,9 +24,6 @@ h3a = ml_plot_eigenvalues(diag(mappingISO.val));
 % ax=gca;
 % ax.XLabel.FontSize=16;
 % ax.YLabel.FontSize=16;
-
-scatter(proj_ISO_X(:,1),proj_ISO_X(:,2),[],options.labels,'filled');
-title('Isomap projection', 'Interpreter', 'Latex')
 
 disp('end of Isomap function')
 
