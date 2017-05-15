@@ -12,7 +12,13 @@ rng(555);
 
 % choose dataset
 list={'Swissroll', 'Iris', 'Breast', 'Parkinsons', 'FunSwissroll', 'FunSwissroll2'};
-loadDataset(list{1});
+loadDataset(list{6});
+
+if verLessThan('MATLAB','9.1')
+   warning(['You are running an older version of  MATLAB. '...
+       'Some features requires MATLAB R2016b. '...
+       'Those features have been disabled.']);
+end
 
 disp('setup done')
 
