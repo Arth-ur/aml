@@ -44,7 +44,7 @@ disp ('Running Isomap')
 options = [];
 options.method_name       = 'Isomap';
 options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 20;    % Number of k-NN for Adjacency Graph
+options.neighbors         = 20;    % Number of neighbors for Adjacency Graph
 options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
