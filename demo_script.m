@@ -67,6 +67,28 @@ set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(
 print('output/isomap-swissroll', '-dpdf','-r0')
 fprintf('Figure saved to file isomap-swissroll.pdf!\n')
 
+%% Show neighbors graph
+close all
+
+k = 5;  % number of neighbors
+
+[D,ni] =  find_nn(data.dataset, k);
+G = graph(tril(D) + tril(D)');  % force symmetry and create graph
+if verLessThan('MATLAB','9.1')  % 3D plot only available in matlab R2016b
+   warning('3D plot only available in Matlab R2016b');
+   plot(G, 'XData', data.dataset(:,1), 'YData', data.dataset(:,3), ...
+       'NodeCData', data.labels, 'MarkerSize', 5)
+else
+    plot(G, 'XData', data.dataset(:,1), 'YData', data.dataset(:,2), ...
+        'ZData', data.dataset(:,3), 'NodeCData', data.labels, 'MarkerSize', 5)
+    view(-24,12)
+end
+
+title('Adjacency graph', 'Interpreter', 'Latex')
+xlabel('x', 'Interpreter', 'Latex')
+ylabel('y', 'Interpreter', 'Latex')
+zlabel('z', 'Interpreter', 'Latex')
+
 %% Complexity analysis
 yn = 'Y';
 if exist('output/timing-isomap.mat', 'file')
