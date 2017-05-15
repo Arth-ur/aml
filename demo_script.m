@@ -88,6 +88,7 @@ title('Adjacency graph', 'Interpreter', 'Latex')
 xlabel('x', 'Interpreter', 'Latex')
 ylabel('y', 'Interpreter', 'Latex')
 zlabel('z', 'Interpreter', 'Latex')
+save2pdf(figure(1),'isomap-adjacency-graph-k-5')
 
 %% Complexity analysis
 yn = 'Y';
