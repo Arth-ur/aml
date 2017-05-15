@@ -50,29 +50,34 @@ disp ('Running Isomap')
 options = [];
 options.method_name       = 'Isomap';
 options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 20;    % Number of neighbors for Adjacency Graph
+options.neighbors         = 35;    % Number of neighbors for Adjacency Graph
 options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
 
 [proj_ISO_X, mappingISO] = OurIsomap(data.dataset, options);
+if length(proj_ISO_X)==length(data.dataset)
+    [D,~] =  find_nn(data.dataset, options.neighbors);
+    G = graph(tril(D) + tril(D)');  % force symmetry and create graph
+       plot(G, 'XData', proj_ISO_X(:,1), 'YData', proj_ISO_X(:,2), ...
+           'NodeCData', data.labels, 'MarkerSize', 5)
+else
+    scatter(proj_ISO_X(:,1),proj_ISO_X(:,2),[],...
+    options.labels(1:size(proj_ISO_X,1)),'filled');
+end
 
-scatter(proj_ISO_X(:,1),proj_ISO_X(:,2),[],options.labels,'filled');
-title('Isomap projection', 'Interpreter', 'Latex')
+title(sprintf('Isomap projection $k=%d$', options.neighbors),...
+    'Interpreter', 'Latex')
 
-h = figure(1);
-set(h,'Units','Inches');
-pos = get(h,'Position');
-set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-print('output/isomap-swissroll', '-dpdf','-r0')
-fprintf('Figure saved to file isomap-swissroll.pdf!\n')
+save2pdf(figure(1), sprintf('isomap-swissroll-k-%d', options.neighbors));
+
 
 %% Show neighbors graph
 close all
 
 k = 5;  % number of neighbors
 
-[D,ni] =  find_nn(data.dataset, k);
+[D,~] =  find_nn(data.dataset, k);
 G = graph(tril(D) + tril(D)');  % force symmetry and create graph
 if verLessThan('MATLAB','9.1')  % 3D plot only available in matlab R2016b
    warning('3D plot only available in Matlab R2016b');
@@ -84,11 +89,11 @@ else
     view(-24,12)
 end
 
-title('Adjacency graph', 'Interpreter', 'Latex')
+title(sprintf('Adjacency graph $k=%d$', k), 'Interpreter', 'Latex')
 xlabel('x', 'Interpreter', 'Latex')
 ylabel('y', 'Interpreter', 'Latex')
 zlabel('z', 'Interpreter', 'Latex')
-save2pdf(figure(1),'isomap-adjacency-graph-k-5')
+save2pdf(figure(1),sprintf('isomap-adjacency-graph-k-%d', k))
 
 %% Complexity analysis
 yn = 'Y';
