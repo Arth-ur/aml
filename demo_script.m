@@ -122,11 +122,17 @@ options.title             = [data.name, ' : Original data'];
 if length(proj_ISO_X)==length(data.dataset)
     [D,~] =  find_nn(data.dataset, options.neighbors);
     G = graph(tril(D) + tril(D)');  % force symmetry and create graph
-       plot(G, 'XData', proj_ISO_X(:,1), 'YData', proj_ISO_X(:,2), ...
-           'NodeCData', data.labels, 'MarkerSize', 5)
+       plot(G, 'XData', proj_ISO_X(:,plotdim(1)), 'YData', proj_ISO_X(:,plotdim(2)), ...
+           'NodeCData', data.labels, 'MarkerSize', 5, 'NodeLabel', '')
 else
-    scatter(proj_ISO_X(:,1),proj_ISO_X(:,2),[],...
-    options.labels(1:size(proj_ISO_X,1)),'filled');
+    disp('Disconnected components!')
+    if numel(unique(data.labels)) < 5
+        options.labels = options.labels(mappingISO.conn_comp);
+        ml_plot_data(proj_ISO_X, options);
+    else
+        scatter(proj_ISO_X(:,plotdim(1)),proj_ISO_X(:,plotdim(2)),[],...
+        options.labels(1:size(proj_ISO_X,1)),'filled');
+    end
 end
 
 title(sprintf('Isomap projection $k=%d$', options.neighbors),...
