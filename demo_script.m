@@ -132,7 +132,7 @@ end
 title(sprintf('Isomap projection $k=%d$', options.neighbors),...
     'Interpreter', 'Latex')
 
-save2pdf(figure(1), sprintf('isomap-swissroll-k-%d', options.neighbors));
+save2pdf(figure(1), sprintf('isomap-%s-k-%d', data.name, options.neighbors));
 
 
 %% Show neighbors graph
