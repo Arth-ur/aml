@@ -32,6 +32,11 @@ function loadDataset(datasetName)
             labels=parkinsons(:,23);
             clear parkinsons
             [M,dim]=size(dataset);
+        case 'wdbc'
+            wdbc=readtable('datasets/wdbc.csv');
+            [labels,idx]=datasample((cell2mat(table2array(wdbc(:,2)))-'B')/('M'-'B')+1, 100);
+            dataset = table2array(wdbc(idx,3:end));
+            [M,dim]=size(dataset);
         otherwise
             datasetName='Swissroll';
             dataset=load('datasets/swissroll.dat');

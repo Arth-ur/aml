@@ -11,8 +11,15 @@ addpath(genpath([path,'/..']));
 rng(555);
 
 % choose dataset
-list={'Swissroll', 'Iris', 'Breast', 'Parkinsons', 'FunSwissroll', 'FunSwissroll2'};
-loadDataset(list{6});
+list={'Swissroll',... 1
+    'Iris',... 2
+    'Breast',... 3
+    'Parkinsons',... 4
+    'FunSwissroll',... 5
+    'FunSwissroll2',... 6
+    'wdbc'... 7
+    };
+loadDataset(list{7});
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
