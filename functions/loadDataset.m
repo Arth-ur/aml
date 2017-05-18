@@ -2,12 +2,6 @@ function loadDataset(datasetName)
  
     % load dataset based on the name
     switch datasetName
-        case 'Breast'
-            breast = load('datasets/breast-cancer-wisconsin.dat');
-            dataset = breast(:,2:10);
-            labels = breast(:,11);
-            [M,dim]=size(dataset);
-            clear breast
         case 'Iris'
             iris = csvread('datasets/iris.csv');
             dataset = iris(51:150,1:4);    

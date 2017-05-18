@@ -24,7 +24,7 @@ plot_options.plot_labels  = {'$y_1$','$y_2$','$y_3$'};
 % plot_options.title        = [data.name, ' : Projected data with Laplacian Eigenmaps'];
 plot_options.title        = ['Eigenmap Projection $k = 10$'];
 if exist('h4','var') && isvalid(h4), delete(h4);end
-h4 = ml_plot_data(proj_LAP_X(:,[1:3]),plot_options);
+h4 = ml_plot_data(proj_LAP_X(:,[1:4]),plot_options);
 legend off
 ax=gca;
 ax.XLabel.FontSize=16;

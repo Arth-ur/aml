@@ -13,13 +13,12 @@ rng(555);
 % choose dataset
 list={'Swissroll',... 1
     'Iris',... 2
-    'Breast',... 3
-    'Parkinsons',... 4
-    'FunSwissroll',... 5
-    'FunSwissroll2',... 6
-    'wdbc'... 7
+    'Parkinsons',... 3
+    'FunSwissroll',... 4
+    'FunSwissroll2',... 5
+    'wdbc'... 6
     };
-loadDataset(list{7});
+loadDataset(list{1});
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
@@ -37,9 +36,9 @@ disp ('Running Laplacian Eigenmap')
 
 options = [];
 options.method_name       = 'Laplacian';
-options.nbDimensions      = 3;  % Number of Eigenvectors to compute.
-options.neighbors         = 10;  % Number of k-NN for Adjacency Graph
-options.sigma             = 10;   % Sigma for Similarity Matrix
+options.nbDimensions      = 4;  % Number of Eigenvectors to compute.
+options.neighbors         = 5; % Number of k-NN for Adjacency Graph
+options.sigma             = 2; % Sigma for Similarity Matrix
 options.labels            = data.labels;
 options.title             = [data.name, ' : Original data'];
 ml_plot_data(data.dataset, options);
@@ -50,7 +49,7 @@ ax.XLabel.FontSize=16;
 ax.YLabel.FontSize=16;
 OurEigenmap( data, options)
 
-%% Complexity analysis
+%% Complexity analysis with the swissroll
 yn = 'n';
 if exist('functions/output/timing-eigenmap.mat', 'file')
     yn = input(['A file "timing-eigenmap.dat" already esists in the '...
@@ -109,11 +108,11 @@ fprintf('Figure saved to file timing-eigenmap.pdf!\n')
 % clc
 close all
 disp ('Running Isomap')
-
+plotdim = [1 2];
 options = [];
 options.method_name       = 'Isomap';
 options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 35;    % Number of neighbors for Adjacency Graph
+options.neighbors         = 10;    % Number of neighbors for Adjacency Graph
 options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
