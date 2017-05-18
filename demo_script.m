@@ -130,7 +130,11 @@ else
 end
 
 title(sprintf('Isomap projection $k=%d$', options.neighbors),...
-    'Interpreter', 'Latex')
+    'Interpreter', 'Latex', 'fontsize',20)
+xlabel('Y1','Interpreter','latex')
+ylabel('Y2','Interpreter','latex')
+grid on
+set(gca,'TickLabelInterpreter', 'latex', 'fontsize',16)
 
 save2pdf(figure(1), sprintf('isomap-%s-k-%d', data.name, options.neighbors));
 
