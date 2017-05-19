@@ -42,7 +42,7 @@ options.neighbors         = 10;  % Number of k-NN for Adjacency Graph
 options.sigma             = 10;   % Sigma for Similarity Matrix
 options.labels            = data.labels;
 options.title             = [data.name, ' : Original data'];
-ml_plot_data(data.dataset, options);
+
 legend off
 ax=gca;
 ax.Title.FontSize=20;
@@ -106,14 +106,18 @@ fprintf('Figure saved to file timing-eigenmap.pdf!\n')
 
 
 %% Isomap
+scatter3(data.dataset(:,4),data.dataset(:,2),data.dataset(:,3),[],data.labels,'filled');
+%%
+
 % clc
 close all
 disp ('Running Isomap')
 
+plotdim = [1 2];
 options = [];
 options.method_name       = 'Isomap';
-options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 35;    % Number of neighbors for Adjacency Graph
+options.nbDimensions      = 2;      % Number of Eigenvectors to compute.
+options.neighbors         = 40;    % Number of neighbors for Adjacency Graph
 options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
