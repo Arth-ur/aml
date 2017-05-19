@@ -42,8 +42,10 @@ set(gca,'TickLabelInterpreter', 'latex', 'fontsize',16)
 set(h,'Units','Inches');
 pos = get(h,'Position');
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-print('functions/output/FunSwissroll2_Laplacian_dim_3_knn_10_sig_10', '-dpdf','-r0')
-fprintf('Figure saved to file isomap-swissroll.pdf!\n')
+name=['output/',data.name,'_Laplacian_dim_', num2str(options.nbDimensions),...
+    '_knn_', num2str(options.neighbors),'_sig_', num2str(options.sigma)];
+print(name, '-dpdf','-r0')
+fprintf(['Figure saved to file ', name,'.pdf!\n'])
 
 disp('end of Eigenmap function')
 end

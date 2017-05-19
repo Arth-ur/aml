@@ -18,7 +18,7 @@ list={'Swissroll',...   1 - 1593 datapoints of dim 3
     'wdbc'...           5 - 100 datapoints of dim 30
     };
 
-loadDataset(list{1});
+loadDataset(list{5});
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
@@ -26,7 +26,7 @@ if verLessThan('MATLAB','9.1')
        'Those features have been disabled.']);
 end
 
-% plot the original dataset only up to 10 dimensions
+% plot the original dataset only if less than 10 dimensions
 if(data.dim<10)
     plot_options.title=['original dataset : ', data.name];
     plot_options.labels=data.labels;
@@ -50,8 +50,8 @@ disp (['Running Laplacian Eigenmap with : ',data.name])
 options = [];
 options.method_name       = 'Laplacian';
 options.nbDimensions      = 4; % Number of Eigenvectors to compute.
-options.neighbors         = 15; % Number of k-NN for Adjacency Graph
-options.sigma             = 0.5; % Sigma for Similarity Matrix
+options.neighbors         = 20; % Number of k-NN for Adjacency Graph
+options.sigma             = 1; % Sigma for Similarity Matrix
 options.labels            = data.labels;
 options.title             = [data.name, ' : Original data'];
 
@@ -59,7 +59,7 @@ OurEigenmap( data, options)
 
 %% Complexity analysis with the swissroll
 yn = 'n';
-if exist('functions/output/timing-eigenmap.mat', 'file')
+if exist('output/timing-eigenmap.mat', 'file')
     yn = input(['A file "timing-eigenmap.dat" already esists in the '...
     'output directory. Do you want to reuse previously generated '...
     'data (Y/n)? '], 's');
@@ -72,17 +72,17 @@ if yn == 'n'
     times = zeros(ns,ntries);
     for i=1:ns
         for j=1:ntries
-            [X, labels] = swissroll2(Ns(i), 'ShowFigures', false);
+            [X, labels] = swissroll(Ns(i), 'ShowFigures', false);
             tic
             [proj_LAP_X, mappingLAP]  = ml_projection(X,options);
             times(i,j) = toc;
         end
     end
-    save('functions/output/timing-eigenmap', 'times', 'Ns')
+    save('output/timing-eigenmap', 'times', 'Ns')
     fprintf('Done! Data saved to file output/timing-eigenmap.dat\n');
 else
     fprintf('Loading previously generated data from file output/timing-eigenmap.dat...\n');
-    load('functions/output/timing-eigenmap')
+    load('output/timing-eigenmap')
     fprintf('Done! Data loaded from file output/timing-eigenmap.dat\n');
 end
 
@@ -92,12 +92,6 @@ ylabel('time (s)','Interpreter','latex')
 title('Eigenmap timing','Interpreter','latex')
 hold on
 
-n=Ns;
-t=2*n.*log(n)*10^-5-0.05;
-
-plot(1:5,t);
-
-axis([-Inf Inf -Inf Inf])
 title('Eigenmap timing','Interpreter', 'Latex','fontsize',20)
 xlabel('N','Interpreter','latex')
 ylabel('Time [s]','Interpreter','latex')
@@ -108,7 +102,7 @@ h = figure(1);
 set(h,'Units','Inches');
 pos = get(h,'Position');
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-print('functions/output/timing-eigenmap', '-dpdf','-r0')
+print('output/timing-eigenmap', '-dpdf','-r0')
 fprintf('Figure saved to file timing-eigenmap.pdf!\n')
 
 
