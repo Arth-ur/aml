@@ -17,7 +17,7 @@ list={'Swissroll',...   1 - 1593 datapoints of dim 3
     'FunSwissroll',...  4 - 500 datapoints of dim 3
     'wdbc'...           5 - 100 datapoints of dim 30
     };
-loadDataset(list{4});
+loadDataset(list{1});
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
@@ -48,9 +48,9 @@ disp (['Running Laplacian Eigenmap with : ',data.name])
 
 options = [];
 options.method_name       = 'Laplacian';
-options.nbDimensions      = 4;  % Number of Eigenvectors to compute.
-options.neighbors         = 5; % Number of k-NN for Adjacency Graph
-options.sigma             = 2; % Sigma for Similarity Matrix
+options.nbDimensions      = 4; % Number of Eigenvectors to compute.
+options.neighbors         = 15; % Number of k-NN for Adjacency Graph
+options.sigma             = 0.5; % Sigma for Similarity Matrix
 options.labels            = data.labels;
 options.title             = [data.name, ' : Original data'];
 
