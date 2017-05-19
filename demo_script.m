@@ -5,8 +5,8 @@ clc
 
 % add path to matlab path
 path=pwd;
-addpath(genpath([path,'/..']));
-
+addpath(genpath([path]));
+%%
 % set the seed for rand geneator to ensure repeatability
 rng(555);
 
