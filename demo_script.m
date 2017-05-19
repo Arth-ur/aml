@@ -6,7 +6,7 @@ clc
 % add path to matlab path
 path=pwd;
 addpath(genpath([path]));
-%%
+
 % set the seed for rand geneator to ensure repeatability
 rng(555);
 
@@ -17,7 +17,7 @@ list={'Swissroll',...   1 - 1593 datapoints of dim 3
     'FunSwissroll',...  4 - 500 datapoints of dim 3
     'wdbc'...           5 - 100 datapoints of dim 30
     };
-loadDataset(list{4});
+loadDataset(list{2});   % choose your dataset
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
@@ -112,22 +112,18 @@ fprintf('Figure saved to file timing-eigenmap.pdf!\n')
 
 
 %% Isomap
-scatter3(data.dataset(:,4),data.dataset(:,2),data.dataset(:,3),[],data.labels,'filled');
-%%
-
-% clc
+clc
 close all
 
 disp (['Running Isomap with : ',data.name])
-plotdim = [1 2];
 options = [];
 options.method_name       = 'Isomap';
-options.nbDimensions      = 3;      % Number of Eigenvectors to compute.
-options.neighbors         = 10;    % Number of neighbors for Adjacency Graph
-
+options.nbDimensions      = 3;          % Number of Eigenvectors to compute.
+options.neighbors         = 10;         % Number of neighbors for Adjacency Graph
 options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
+plotdim = [1 2];    % the isomap dimensions to plot
 
 [proj_ISO_X, mappingISO] = OurIsomap(data.dataset, options);
 if length(proj_ISO_X)==length(data.dataset)
@@ -173,10 +169,13 @@ else
     view(-24,12)
 end
 
-title(sprintf('Adjacency graph $k=%d$', k), 'Interpreter', 'Latex')
+title(sprintf('Adjacency graph $k=%d$', k), 'Interpreter', 'Latex','fontsize',20)
 xlabel('x', 'Interpreter', 'Latex')
 ylabel('y', 'Interpreter', 'Latex')
 zlabel('z', 'Interpreter', 'Latex')
+grid on
+set(gca,'TickLabelInterpreter', 'latex', 'fontsize',16)
+
 save2pdf(figure(1),sprintf('isomap-adjacency-graph-k-%d', k))
 
 %% Complexity analysis
