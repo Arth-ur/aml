@@ -11,14 +11,14 @@ addpath(genpath([path,'/..']));
 rng(555);
 
 % choose dataset
-list={'Swissroll',... 1
-    'Iris',... 2
-    'Parkinsons',... 3
-    'FunSwissroll',... 4
-    'FunSwissroll2',... 5
-    'wdbc'... 6
+list={'Swissroll',...   1 - 1593 datapoints of dim 3
+    'Iris',...          2 - 100 datapoints of dim 4
+    'Parkinsons',...    3 - 195 datapoints of dim 22
+    'FunSwissroll',...  4 - 400 datapoints of dim 3
+    'FunSwissroll2',... 5 - 500 datapoints of dim 3
+    'wdbc'...           6 - 100 datapoints of dim 30
     };
-loadDataset(list{1});
+loadDataset(list{5});
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
@@ -32,7 +32,7 @@ disp('setup done')
 clc
 close all
 
-disp ('Running Laplacian Eigenmap')
+disp (['Running Laplacian Eigenmap with : ',data.name])
 
 options = [];
 options.method_name       = 'Laplacian';
@@ -107,7 +107,7 @@ fprintf('Figure saved to file timing-eigenmap.pdf!\n')
 %% Isomap
 % clc
 close all
-disp ('Running Isomap')
+disp (['Running Isomap with : ',data.name])
 plotdim = [1 2];
 options = [];
 options.method_name       = 'Isomap';

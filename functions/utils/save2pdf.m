@@ -1,7 +1,7 @@
 function save2pdf( h, file)
 %SAVE2PDF Save figure h to pdf file
 
-parentdir = 'output';
+parentdir = 'functions/output';
 path = sprintf('%s/%s', parentdir, file);
 
 set(h,'Units','Inches');
