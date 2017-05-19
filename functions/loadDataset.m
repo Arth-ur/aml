@@ -15,10 +15,7 @@ function loadDataset(datasetName)
             dataset = dataset(dataset(:,1)>-10,:);
             [M,dim] = size(dataset);
         case 'FunSwissroll'
-            [dataset, labels] = swissroll(100,[5,8;5,12;15,8;15,12],[2.5, 1]);
-            [M,dim] = size(dataset);
-        case 'FunSwissroll2'
-            [dataset, labels] = swissroll2(500);
+            [dataset, labels] = swissroll(500);
             [M,dim] = size(dataset);
         case 'Parkinsons'
             parkinsons=load('datasets/parkinsons.csv');

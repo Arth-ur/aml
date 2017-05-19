@@ -3,13 +3,10 @@ function [data, labels] = swissroll(varargin)
     %   [DATA, LABELS] = SWISSROLL() generates swissroll with default
     %   parameters.
     %
-    %   [DATA, LABELS] = SWISSROLL(N, CENTERS, S) generates swissroll with 
+    %   [DATA, LABELS] = SWISSROLL(N) generates swissroll with 
     %   N samples per class, with class centered around the CENTERS which
     %   is a 4x2 array and with a standard deviation along the x and y axis
     %   given by the 2-elements array S = [SX, SY].
-    %
-    %   [DATA, LABELS] = SWISSROLL(__, 'Seed', seed) sets the seed for the
-    %   random number generator.
     %
     %   [DATA, LABELS] = SWISSROLL(__, 'Output', output)  enables output of
     %   data and figures to files.
@@ -47,37 +44,26 @@ function [data, labels] = swissroll(varargin)
         warning('amlp:usingdefaults', ...
             'Using default value for parameter %s', 'N'),
     end
-    if any(ismember(p.UsingDefaults, 'centers'))
-        warning('amlp:usingdefaults', ...
-            'Using default value for parameter %s', 'centers'),
+    if ~any(ismember(p.UsingDefaults, 'centers'))
+        warning('amlp:usingdeprecated', ...
+            'Using deprecated parameter %s', 'centers'),
     end
-    if any(ismember(p.UsingDefaults, 's'))
-        warning('amlp:usingdefaults', ...
-            'Using default value for parameter %s', 's'),
-    end
-    
-    % rng seed
     if ~any(ismember(p.UsingDefaults, 's'))
-        seed = p.Results.Seed;
-        rng(seed);
+        warning('amlp:usingdeprecated', ...
+            'Using deprecated parameter %s', 's'),
+    end
+    if ~any(ismember(p.UsingDefaults, 'Seed'))
+        warning('amlp:usingdeprecated', ...
+            'Using deprecated parameter %s', 'Seed'),
     end
  
     % parameters
     N = p.Results.N; % number of points in each class
-    sx = p.Results.s(1);  %2 standard deviation on x
-    sy = p.Results.s(2);  %3 standard deviation on y
-    centers = p.Results.centers; % centers of classes
 
     % generate gaussian distributions
-    X = [normrnd(centers(1,1),sx,1,N)...
-        normrnd(centers(2,1),sx,1,N)...
-        normrnd(centers(3,1),sx,1,N)...
-        normrnd(centers(4,1),sx,1,N)];
+    X = sort(rand(1,N)*2*pi*2);
 
-    Y = [normrnd(centers(1,2),sy,1,N)...
-        normrnd(centers(2,2),sy,1,N)...
-        normrnd(centers(3,2),sy,1,N)...
-        normrnd(centers(4,2),sy,1,N)];
+    Y = rand(1,N)/10;
 
     % compute 3d dataset
     X3 = X .* cos(X);
@@ -87,27 +73,28 @@ function [data, labels] = swissroll(varargin)
     if p.Results.ShowFigures
         % plot original 2d dataset
         figure
-        plot(X(1:N),Y(1:N), 'r.',...
-            X(N:2*N), Y(N:2*N), 'g.',...
-            X(2*N:3*N), Y(2*N:3*N), 'm.',...
-            X(3*N:4*N), Y(3*N:4*N), 'b.');
-        legend('Class 1', 'Class 2', 'Class 3', 'Class 4', 'Location', 'Best')
-        title('2D base dataset')
-
+        scatter(X(1:N),Y(1:N),[],linspace(0,1,N), 'filled'); 
+        title('2D Base dataset for Swissroll', 'Interpreter', 'Latex','fontsize',20)
+        xlabel('X','Interpreter','latex')
+        ylabel('Y','Interpreter','latex')
+        grid on
+        set(gca,'TickLabelInterpreter', 'latex', 'fontsize',16)
+        
         % plot 3d dataset
         figure
-        plot3(X3(1:N), Y3(1:N), Z3(1:N), 'r.',...
-            X3(N:2*N), Y3(N:2*N), Z3(N:2*N), 'g.',...
-            X3(2*N:3*N), Y3(2*N:3*N), Z3(2*N:3*N), 'm.',...
-            X3(3*N:4*N), Y3(3*N:4*N), Z3(3*N:4*N), 'b.');
+        scatter3(X3(1:N), Y3(1:N), Z3(1:N), [], linspace(0,1,N), 'filled');
         view(-16,14)
-        legend('Class 1', 'Class 2', 'Class 3', 'Class 4', 'Location', 'Best')
-        title('3D dataset')
+        title('Swissroll', 'Interpreter', 'Latex','fontsize',20)
+        xlabel('X','Interpreter','latex')
+        ylabel('Y','Interpreter','latex')
+        zlabel('Z','Interpreter','latex')
+        grid on
+        set(gca,'TickLabelInterpreter', 'latex', 'fontsize',16)
     end
 
     % prepare exported data
     data = [X3' Y3' Z3'];
-    labels = reshape(repmat(1:4,N,1),[1,N*4])';
+    labels = (1:N)';
 
     % export data and figure to output directory
     % check if output directory does exist
@@ -136,12 +123,7 @@ function [data, labels] = swissroll(varargin)
         kvffile = [p.Results.OutputDir '/swissroll.kvf'];
         texfile = [p.Results.OutputDir '/swissroll.tex'];
         diary(kvffile);
-        if exist('seed', 'var')
-            disp(['seed = ' num2str(seed)]);
-        end
         disp(['N = ' num2str(N)]);
-        disp(['sx = ' num2str(sx)]);
-        disp(['sy = ' num2str(sy)]);
         diary off;
         fclose('all');
         kvf2tex(kvffile, texfile, 'swissroll'); % to latex

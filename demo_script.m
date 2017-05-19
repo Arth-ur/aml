@@ -14,16 +14,28 @@ rng(555);
 list={'Swissroll',...   1 - 1593 datapoints of dim 3
     'Iris',...          2 - 100 datapoints of dim 4
     'Parkinsons',...    3 - 195 datapoints of dim 22
-    'FunSwissroll',...  4 - 400 datapoints of dim 3
-    'FunSwissroll2',... 5 - 500 datapoints of dim 3
-    'wdbc'...           6 - 100 datapoints of dim 30
+    'FunSwissroll',...  4 - 500 datapoints of dim 3
+    'wdbc'...           5 - 100 datapoints of dim 30
     };
-loadDataset(list{5});
+loadDataset(list{4});
 
 if verLessThan('MATLAB','9.1')
    warning(['You are running an older version of  MATLAB. '...
        'Some features requires MATLAB R2016b. '...
        'Those features have been disabled.']);
+end
+
+% plot the original dataset only up to 10 dimensions
+if(data.dim<10)
+    plot_options.title=['original dataset : ', data.name];
+    plot_options.labels=data.labels;
+    ml_plot_data(data.dataset,plot_options);
+    legend off
+    ax=gca;
+    ax.Title.FontSize=20;
+    ax.XLabel.FontSize=16;
+    ax.YLabel.FontSize=16;
+    ax.ZLabel.FontSize=16;
 end
 
 disp('setup done')
@@ -42,11 +54,6 @@ options.sigma             = 2; % Sigma for Similarity Matrix
 options.labels            = data.labels;
 options.title             = [data.name, ' : Original data'];
 
-legend off
-ax=gca;
-ax.Title.FontSize=20;
-ax.XLabel.FontSize=16;
-ax.YLabel.FontSize=16;
 OurEigenmap( data, options)
 
 %% Complexity analysis with the swissroll
