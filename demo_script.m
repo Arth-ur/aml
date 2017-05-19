@@ -119,8 +119,8 @@ close all
 disp (['Running Isomap with : ',data.name])
 options = [];
 options.method_name       = 'Isomap';
-options.nbDimensions      = 3;          % Number of Eigenvectors to compute.
-options.neighbors         = 10;         % Number of neighbors for Adjacency Graph
+options.nbDimensions      = 5;          % Number of Eigenvectors to compute.
+options.neighbors         = 15;         % Number of neighbors for Adjacency Graph
 options.labels            = data.labels;
 options.name              = data.name;
 options.title             = [data.name, ' : Original data'];
@@ -181,20 +181,27 @@ save2pdf(figure(1),sprintf('isomap-adjacency-graph-k-%d', k))
 
 %% Complexity analysis
 yn = 'n';
-ns=7;
+ns = 7;
+ntries = 5;
+if ~exist('output', 'dir')
+   mkdir output 
+end
 if exist('output/timing-isomap.mat', 'file')
     yn = input(['A file "timing-isomap.dat" already esists in the '...
     'output directory. Do you want to reuse previously generated '...
     'data (Y/n)? '], 's');
 end
+options = [];
+options.method_name       = 'Isomap';
+options.nbDimensions      = 2;          % Number of Eigenvectors to compute.
+options.neighbors         = 20;         % Number of neighbors for Adjacency Graph
 if yn == 'n'
     fprintf('Generating data...\n');
     Ns = linspace(500,5000,ns);
-    ntries = 5;
     times = zeros(ns,ntries);
     for i=1:ns
         for j=1:ntries
-            [X, ~] = swissroll2(Ns(i), 'ShowFigures', false);
+            [X, ~] = swissroll(Ns(i), 'ShowFigures', false);
             tic
             [proj_ISO_X, mappingISO]  = ml_projection(X,options);
             times(i,j) = toc;
@@ -208,14 +215,8 @@ else
     fprintf('Done! Data loaded from file output/timing-isomap.dat\n');
 end
 
-
 boxplot(times', Ns)
 xlabel('N','Interpreter','latex')
 ylabel('Time [s]','Interpreter','latex')
 title('Isomap timing','Interpreter','latex')
-h = figure(1);
-set(h,'Units','Inches');
-pos = get(h,'Position');
-set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
-print('output/timing-isomap', '-dpdf','-r0')
-fprintf('Figure saved to file timing-isomap.pdf!\n')
+save2pdf(figure(1), 'timing-isomap')
